@@ -28,7 +28,7 @@ window.addEventListener('load', () => {
                     const {temp_min} = data.main;
                     console.log(data);
 
-                    temperatureDegree.textContent = temp + '\xB0' + "C";
+                    temperatureDegree.textContent = temp + '\xB0' + ' C';
                     temperatureDescription.textContent = main;
                     locationTimezone.textContent = data.name;
                     maxTemperature.textContent = 'Max: ' + temp_max + '\xB0' +' C';
