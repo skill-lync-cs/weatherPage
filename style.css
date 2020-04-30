@@ -53,3 +53,9 @@ h1 {
 .maxTemp, .minTemp {
     font-size: 20px;
 }
+@media screen and (max-width: 1024px){
+    .location{
+        flex-direction: column;
+        margin: 0 auto;
+    }
+}
