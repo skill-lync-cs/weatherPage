@@ -26,7 +26,6 @@ window.addEventListener('load', () => {
                     const {icon} = data.weather[0];
                     const {temp_max} = data.main;
                     const {temp_min} = data.main;
-                    console.log(data);
 
                     temperatureDegree.textContent = temp + '\xB0' + ' C';
                     temperatureDescription.textContent = main;
