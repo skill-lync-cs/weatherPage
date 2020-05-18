@@ -1,80 +1,71 @@
-window.addEventListener('load', () => {
-    let long;
-    let lat;
-    let temperatureDescription = document.querySelector(".temperature-description");
-    let temperatureDegree = document.querySelector(".temperature-degree");
-    let locationTimezone = document.querySelector(".location-timezone");
-    let setIcon = document.querySelector(".icon");
-    let maxTemperature = document.querySelector(".maxTemp");
-    let minTemperature = document.querySelector(".minTemp");
+let long;
+let lat;
+let temperatureDescription = document.querySelector(".temperature-description");
+let temperatureDegree = document.querySelector(".temperature-degree");
+let locationTimezone = document.querySelector(".location-timezone");
+let setIcon = document.querySelector(".icon");
+let maxTemperature = document.querySelector(".maxTemp");
+let minTemperature = document.querySelector(".minTemp");
+let windSpeed = document.querySelector(".windSpeed")
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(position => {
-            long = position.coords.longitude;
-            lat = position.coords.latitude;
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(position => {
+        long = position.coords.longitude;
+        lat = position.coords.latitude;
+        getWeatherdata(lat, long);
+    })
+}
 
-            const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=ddfaba4398b491fa4ef3e29a5e934c6e`;
 
+    
+async function getWeatherdata(lat,long) {
+        const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=ddfaba4398b491fa4ef3e29a5e934c6e`;
 
-            fetch(api)
-                .then(response => {
-                    return response.json();
-                })
-                .then(data => {
-                    const {temp} = data.main;
-                    const {main} = data.weather[0];
-                    const {icon} = data.weather[0];
-                    const {temp_max} = data.main;
-                    const {temp_min} = data.main;
-                    console.log(data);
+        let response = await fetch(api);
+        let data =await response.json();
 
-                    temperatureDegree.textContent = temp + '\xB0' + ' C';
-                    temperatureDescription.textContent = main;
-                    locationTimezone.textContent = data.name;
-                    maxTemperature.textContent = 'Max: ' + temp_max + '\xB0' +' C';
-                    minTemperature.textContent = 'Min: ' + temp_min + '\xB0' +' C';
-                    setIcon.innerHTML = setIconFunction(icon);
-                });
-        });
-    }
-    function setIconFunction(icon) {
-        if(icon == "01d"){
-            return `<img src="./animated/day.svg"></img>`;
-        } else if(icon == "02d"){
-            return `<img src="./animated/cloudy-day-1.svg"></img>`;
-        } else if(icon == "03d"){
-            return `<img src="./animated/cloudy-day-2.svg"></img>`;
-        } else if(icon == "04d"){
-            return `<img src="./animated/cloudy-day-3.svg"></img>`;
-        } else if(icon == "09d"){
-            return `<img src="./animated/rainy-1.svg"></img>`;
-        } else if(icon == "10d"){
-            return `<img src="./animated/rainy-2.svg"></img>`;
-        } else if(icon == "11d"){
-            return `<img src="./animated/rainy-3.svg"></img>`;
-        } else if(icon == "13d"){
-            return `<img src="./animated/snowy-6.svg"></img>`;
-        } else if(icon == "50d"){
-            return `<img src="./animated/50d@2x.svg"></img>`;
-        } else if(icon == "01n"){
-            return `<img src="./animated/night.svg"></img>`;
-        } else if(icon == "02n"){
-            return `<img src="./animated/cloudy-night-1.svg"></img>`;
-        } else if(icon == "03n"){
-            return `<img src="./animated/cloudy-night-2.svg"></img>`;
-        } else if(icon == "04n"){
-            return `<img src="./animated/cloudy-night-3.svg"></img>`;
-        } else if(icon == "09n"){
-            return `<img src="./animated/rainy-1.svg"></img>`;
-        } else if(icon == "10n"){
-            return `<img src="./animated/rainy-2.svg"></img>`;
-        } else if(icon == "11n"){
-            return `<img src="./animated/rainy-3.svg"></img>`;
-        } else if(icon == "13n"){
-            return `<img src="./animated/snowy-6.svg"></img>`;
-        } else if(icon == "50n"){
-            return `<img src="./animated/50n@2x.svg"></img>`;
-        } 
-    }
+        weatherDataHandler(data);
+}
 
-});
+function weatherDataHandler(data) {
+    const { temp } = data.main;
+    const { description } = data.weather[0];
+    const { icon } = data.weather[0];
+    const { temp_max } = data.main;
+    const { temp_min } = data.main;
+    const { speed } = data.wind;
+
+    temperatureDegree.textContent = temp + '\xB0' + ' C';
+    temperatureDescription.textContent = description;
+    locationTimezone.textContent = data.name;
+    maxTemperature.textContent = 'Max: ' + temp_max + '\xB0' + ' C';
+    minTemperature.textContent = 'Min: ' + temp_min + '\xB0' + ' C';
+    windSpeed.textContent = 'Wind Speed: ' + speed + ' m/s';
+    setIcon.innerHTML = setIconFunction(icon);
+}
+
+function setIconFunction(icon) {
+
+    const icons = {
+        "01d": "./animated/day.svg",
+        "02d": "./animated/cloudy-day-1.svg",
+        "03d": "./animated/cloudy-day-2.svg",
+        "04d": "./animated/cloudy-day-3.svg",
+        "09d": "./animated/rainy-1.svg",
+        "10d": "./animated/rainy-2.svg",
+        "11d": "./animated/rainy-3.svg",
+        "13d": "./animated/snowy-6.svg",
+        "50d": "./animated/50d@2x.svg",
+        "01n": "./animated/night.svg",
+        "02n": "./animated/cloudy-night-1.svg",
+        "03n": "./animated/cloudy-night-2.svg",
+        "04n": "./animated/cloudy-night-3.svg",
+        "09n": "./animated/rainy-1.svg",
+        "10n": "./animated/rainy-2.svg",
+        "11n": "./animated/rainy-3.svg",
+        "13n": "./animated/snowy-6.svg",
+        "50n": "./animated/50n@2x.svg"
+    };
+
+    return `<img src=${icons[icon]}>`;
+}
