@@ -22,7 +22,7 @@ async function getWeatherdata(lat,long) {
         const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=ddfaba4398b491fa4ef3e29a5e934c6e`;
 
         let response = await fetch(api);
-        let data =await response.json();
+        let data = await response.json();
 
         weatherDataHandler(data);
 }
