@@ -9,13 +9,35 @@ let minTemperature = document.querySelector(".minTemp");
 let windSpeed = document.querySelector(".windSpeed")
 
 if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(position => {
+    navigator.geolocation.getCurrentPosition(async position => {
         long = position.coords.longitude;
         lat = position.coords.latitude;
-        getWeatherdata(lat, long);
+        const data = await getWeatherdata(lat, long);
+
+    
+        // Map related Code
+        var map = L.map('map').setView([20.9716, 80.5946], 5);
+
+        L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=OdpemAaV0raJvYO6cUSS', {
+            attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+        }).addTo(map);
+        
+        var marker = L.marker([lat, long]).addTo(map);
+        marker.bindPopup(data.name).openPopup();
+        
+        
+        map.on('click', async function(e) {
+            console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+
+           const data = await getWeatherdata(e.latlng.lat, e.latlng.lng);
+
+            marker.setLatLng([e.latlng.lat, e.latlng.lng]);
+            marker.bindPopup(data.name).openPopup();
+        });
+        
+
     })
 }
-
 
     
 async function getWeatherdata(lat,long) {
@@ -25,6 +47,7 @@ async function getWeatherdata(lat,long) {
         let data = await response.json();
 
         weatherDataHandler(data);
+        return data;
 }
 
 function weatherDataHandler(data) {
@@ -41,7 +64,7 @@ function weatherDataHandler(data) {
     maxTemperature.textContent = 'Max: ' + temp_max + '\xB0' + ' C';
     minTemperature.textContent = 'Min: ' + temp_min + '\xB0' + ' C';
     windSpeed.textContent = 'Wind Speed: ' + speed + ' m/s';
-    setIcon.innerHTML = setIconFunction(icon);
+    setIcon.style["background-image"] = `url(${setIconFunction(icon)})`;
 }
 
 function setIconFunction(icon) {
@@ -67,5 +90,5 @@ function setIconFunction(icon) {
         "50n": "./animated/50n@2x.svg"
     };
 
-    return `<img src=${icons[icon]}>`;
+    return icons[icon];
 }

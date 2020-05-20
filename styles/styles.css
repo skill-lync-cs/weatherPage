@@ -1,0 +1,68 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-weight: 300;
+}
+
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+}
+
+#weather {
+  z-index: 1000;
+  background-color: whitesmoke;
+  position: absolute;
+  width: 350px;
+  top: 100px;
+  right: 100px;
+  border-radius: 10px;
+  color: black;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen-Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif;
+  text-align: center;
+  padding: 20px;
+  opacity: 0.8;
+}
+
+#weather .location-timezone {
+  font-weight: 300;
+  font-size: 3rem;
+}
+
+#weather p {
+  /* background-image: url('../animated/cloudy-day-3.svg'); */
+  width: 150px;
+  height: 150px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: 0 auto;
+}
+
+#weather .temperature-description {
+  font-size: 30px;
+}
+
+#weather .temperature-degree {
+  font-size: 40px;
+  font-weight: 400;
+  padding: 0.3em 0;
+}
+
+#weather .details {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  font-size: 20px;
+}
+
+#weather .windSpeed {
+  font-size: 20px;
+}
+/*# sourceMappingURL=styles.css.map */

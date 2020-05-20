@@ -1,27 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../reset css/resetCss.css">
-    <link rel="stylesheet" href="style.css">
-    <title>weatherApp</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="./styles/styles.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 </head>
+
 <body>
-    <div class="location">
-        <h1 class="location-timezone"></h1>
-        <p class="icon"></p>
-    </div>
-    <div class="temperature">
-        <div class="degree-section">
-            <h2 class="temperature-degree"></h2>
-            <span></span>
+    <div class="container">
+        <div id="map"></div>
+        <div id="weather">
+            <div class="location">
+                <h1 class="location-timezone"></h1>
+                <p class="icon"></p>
+            </div>
+            <div class="temperature">
+                <div class="temperature-description"></div>
+                <div class="degree-section">
+                    <h2 class="temperature-degree"></h2>
+                </div>
+                <div class="details">
+                    <div class="maxTemp"></div>
+                    <div class="minTemp"></div>
+                </div>
+                <div class="windSpeed"></div>
+            </div>
         </div>
-        <div class="temperature-description"></div>
-        <div class="maxTemp"></div>
-        <div class="minTemp"></div>
-        <div class="windSpeed"></div>
     </div>
     <script type="module" src="script.js"></script>
 </body>
+
 </html>
