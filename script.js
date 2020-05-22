@@ -16,8 +16,10 @@ function expandTab() {
         weather.classList.add('expand');
 
         setTimeout(() => {
-            weather.classList.remove('expand')
+            weather.classList.remove('expand');
         }, 3000);
+    }else {
+        weather.classList.remove('expand');
     }
     
 }

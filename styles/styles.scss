@@ -85,7 +85,7 @@
     }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 720px) {
     #weather {
         bottom: 0;
         top: auto;
@@ -129,6 +129,7 @@
 
     #weather.expand{
         bottom: 0;
+        transition: all 1s;
         top: auto;
         width: 100%;
         right: 0;
