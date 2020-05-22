@@ -7,6 +7,20 @@ let setIcon = document.querySelector(".icon");
 let maxTemperature = document.querySelector(".maxTemp");
 let minTemperature = document.querySelector(".minTemp");
 let windSpeed = document.querySelector(".windSpeed")
+let weather = document.querySelector("#weather");
+
+weather.addEventListener("click", expandTab);
+
+function expandTab() {
+    if(!weather.classList.contains('expand')) {
+        weather.classList.add('expand');
+
+        setTimeout(() => {
+            weather.classList.remove('expand')
+        }, 3000);
+    }
+    
+}
 
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async position => {
@@ -78,7 +92,7 @@ function setIconFunction(icon) {
         "10d": "./animated/rainy-2.svg",
         "11d": "./animated/rainy-3.svg",
         "13d": "./animated/snowy-6.svg",
-        "50d": "./animated/50d@2x.svg",
+        "50d": "./animated/mist.svg",
         "01n": "./animated/night.svg",
         "02n": "./animated/cloudy-night-1.svg",
         "03n": "./animated/cloudy-night-2.svg",
@@ -87,7 +101,7 @@ function setIconFunction(icon) {
         "10n": "./animated/rainy-2.svg",
         "11n": "./animated/rainy-3.svg",
         "13n": "./animated/snowy-6.svg",
-        "50n": "./animated/50n@2x.svg"
+        "50n": "./animated/mist.svg"
     };
 
     return icons[icon];
