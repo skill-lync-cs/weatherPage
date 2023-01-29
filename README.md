@@ -1,7 +1,7 @@
 # Workshop - Weather Application
 
 - Step 1: Use codesandbox for setup web project
-Login into https://codesandbox.io/ and select new project from template, choose JavaScript.
+Login into https://codesandbox.io/ and select new project from template, choose Vanilla JavaScript.
 
 ![](images/StartJavaScriptSandbox.gif)
 
