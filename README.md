@@ -23,7 +23,7 @@ Login into https://codesandbox.io/ and select new project from template, choose 
         <span>+</span>
         <input type="text" id="number2" class="input-text">
         <span>=</span>
-        <span id="result"></span>
+        <div id="result"></div>
         <button class="btn" id="submit-btn">Click to add Numbers</button>
     </section>
 </div>
@@ -43,13 +43,6 @@ section {
   border: 1px solid GREY;
   border-radius: 5px;
   padding: 5px;
-  margin: 10px;
-}
-```
-
-- Step 6: Try to give margin to all the span elements
-```css
-span{
   margin: 10px;
 }
 ```
@@ -80,6 +73,7 @@ span{
 ```
 
 - Step 9: Add behavior to the button
+
 Add a onClick function in html to alert Hello World on click of button
 ```html
 <button class="btn" id="submit-btn"
@@ -118,7 +112,35 @@ function addTwoNumbers() {
 - Step 12: Understand var, let and const
     - var : function scope
     - let and const : block scope
+```javascript
+function foo() {
+    var a = 5;
+    var b = 10;
+    var c = a + b;
+}
 
+foo();
+console.log(c);
+
+```
+
+```javascript
+function foo() {
+    var a = 5;
+    var b = 10;
+    const c = a + b;
+    if (b > a) {
+        let c = a + b;
+    }
+
+    console.log(c);
+    return c;
+}
+
+const sum = foo();
+console.log(sum);
+
+```
 - Step 13: Importance of Developer tools and console.log()
 
 - Step 14: Functions in JavaScript
@@ -128,16 +150,20 @@ function addTwoNumbers() {
         return a + b;
     }
     ```
+    Question: Write a function for adding three numbers
     - Function Expression
     ```javascript
     const add = function(a,b) {
         return a + b;
     }
     ```
+    Question: Write a function for adding three numbers
     - Arrow function
     ```javascript
     const add = (a,b) => a + b;
     ```
+    Question: Write a function for adding three numbers with arrow function
+
     How do you call a function
     ```javascript
     const c = add(4,5);
@@ -148,14 +174,18 @@ function addTwoNumbers() {
 ```javascript
 setTimeout(() => {
     console.log('I am going to be called after 5 seconds');
+    const c = add(4,5);
+    console.log(c);
 }, 5000)
 ```
 
 - Step 16: Function as a first class citizen and Higher Order Function
 
-*When a function can be passed as a normal argument just like number or string*
+*When a function can be passed as a normal argument just like number or string, this feature is called Function as first class citizen*
 
 Example: In setTimeout a function is passed for later use. The passed function is called callback function, and the function which can accept another function as an argument is called Higher Order Function.
+
+**Def: Any function which takes function as an argument or return function is called Higher Order Function**
 
 ```javascript
 const submitBtn = document.getElementById("submit-btn");
@@ -175,7 +205,7 @@ function addTwoNumbers() {
 - Step 17: Create another project in codesandbox and try to get the current latitude and longitude
 ```javascript
 if (navigator.geolocation) {
-    navigator.getlocation.getCurrentPosition(position => {
+    navigator.geolocation.getCurrentPosition(position => {
         const long = position.coords.longitude;
         const lat = position.coords.latitude;
         console.log('Lat : ' + lat + ' Long : ' + long);
@@ -201,8 +231,8 @@ if (navigator.geolocation) {
 
         const api = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&units=metric&appid=ddfaba4398b491fa4ef3e29a5e934c6e`;
 
-        let response = await fetch(api);
-        let data = await response.json();
+        const response = await fetch(api);
+        const data = await response.json();
 
         console.log(data);
     })
@@ -214,7 +244,7 @@ if (navigator.geolocation) {
 
 ```javascript
 if (navigator.geolocation) {
-    navigator.getlocation.getCurrentPosition(position => {
+    navigator.getlocation.getCurrentPosition(async position => {
         const long = position.coords.longitude;
         const lat = position.coords.latitude;
         console.log('Lat : ' + lat + ' Long : ' + long);
