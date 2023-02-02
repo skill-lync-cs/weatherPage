@@ -179,7 +179,7 @@ setTimeout(() => {
 }, 5000)
 ```
 
-- Step 16: Function as a first class citizen and Higher Order Function
+- Step 15: Function as a first class citizen and Higher Order Function
 
 *When a function can be passed as a normal argument just like number or string, this feature is called Function as first class citizen*
 
@@ -202,7 +202,7 @@ function addTwoNumbers() {
 - addEventListener is also a Higher Order Function,
 - addTwoNumbers passed in the addEventListner is a callback function.
 
-- Step 17: Create another project in codesandbox and try to get the current latitude and longitude
+- Step 16: Create another project in codesandbox and try to get the current latitude and longitude
 ```javascript
 if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(position => {
@@ -213,13 +213,13 @@ if (navigator.geolocation) {
 }
 ```
 
-- Step 18: understanding what is API
+- Step 17: understanding what is API
 
 An API, or Application Programming Interface, is a way for different software programs to communicate with each other. Think of it like a waiter in a restaurant. Just like a waiter takes your order and brings your food to you, an API is a middleman that takes a request from a program and returns the desired information or service.
 
 For example, let's say you use a weather app on your phone to check the forecast. The app doesn't make the weather forecast itself, but it uses an API to request the forecast from a weather service. The API acts as a translator, taking the request from the app and sending it to the weather service. The service then sends the forecast data back to the API, which in turn sends it back to the app to display on your screen.
 
-- Step 19: Search for weather API over the internet and use the fetch function to get the weather data
+- Step 18: Search for weather API over the internet and use the fetch function to get the weather data
 
 ```javascript
 
@@ -240,7 +240,7 @@ if (navigator.geolocation) {
 
 ```
 
-- Step 20: Seperate the functionality for fetching weather data into sepearate function
+- Step 19: Seperate the functionality for fetching weather data into sepearate function
 
 ```javascript
 if (navigator.geolocation) {
@@ -266,7 +266,7 @@ async function getWeatherData(lat, long) {
 
 ```
 
-- Step 21: Render weather data on HTML
+- Step 20: Render weather data on HTML
 
 Add the below code to html
 ```html
@@ -282,29 +282,211 @@ Add the below code to html
 Create a function to display weather data on UI
 ```javascript
 function weatherDataHandler(data) {
-    const temp = data.main;
-    const description = data.weather[0];
-    const icon = data.weather[0];
-    const temp_max = data.main;
-    const temp_min = data.main;
-    const speed = data.wind;
+    document.querySelector('#place').innherHTML = data.name;
+    document.querySelector("#temperature-description") = data.weather[0];
+    document.querySelector("#temperature-degree").innerHTML = data.main.temp;
+    document.querySelector("#maxTemp").innerHTML = data.main.temp_max;
+    document.querySelector("#minTemp").innerHTML = data.main.temp_min;
+    document.querySelector("#windSpeed").innerHTML = data.wind;
+}
+```
+Call the weatherDataHandler()
+```javascript
+if (navigator.geolocation) {
+    navigator.getlocation.getCurrentPosition(async position => {
+        const long = position.coords.longitude;
+        const lat = position.coords.latitude;
+        console.log('Lat : ' + lat + ' Long : ' + long);
 
-    const temperatureDescription = document.querySelector("#temperature-description");
-    const temperatureDegree = document.querySelector("#temperature-degree");
-    const locationTimezone = document.querySelector("#location-timezone");
-    const maxTemperature = document.querySelector("#maxTemp");
-    const minTemperature = document.querySelector("#minTemp");
-    const windSpeed = document.querySelector("#windSpeed")
+        const weatherData = await getWeatherData(lat, long);
 
-
-    temperatureDegree.textContent = temp + '\xB0' + ' C';
-    temperatureDescription.textContent = description;
-    locationTimezone.textContent = data.name;
-    maxTemperature.textContent = 'Max: ' + temp_max + '\xB0' + ' C';
-    minTemperature.textContent = 'Min: ' + temp_min + '\xB0' + ' C';
-    windSpeed.textContent = 'Wind Speed: ' + speed + ' m/s';
+        console.log(weatherData);
+        weatherDataHandler(weatherData);
+    })
 }
 ```
 
+## Congratulations, you are able to successfully consume the weather API.
+
 # Day 2
 
+- Step 21: Exploring how to add Map to our application
+    
+Possible options are 
+- Google Maps
+- Leaflet Map
+
+https://leafletjs.com/examples/quick-start/
+
+Steps to follow
+
+- Include Leaflet CSS file in the head section of your document:
+```html
+ <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+     integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+     crossorigin=""/>
+```
+- Include Leaflet JavaScript file after Leaflet’s CSS:
+```html
+ <!-- Make sure you put this AFTER Leaflet's CSS -->
+ <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+     integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+     crossorigin=""></script>
+```
+
+- Put a div element with a certain id where you want your map to be:
+```html
+<div id="map"></div>
+<div id="weather">
+    <h1 id="place"></h1>
+    <div id="temperature-description"></div>
+    <h2 id="temperature-degree"></h2>
+    <div id="maxTemp"></div>
+    <div id="minTemp"></div>
+    <div id="windSpeed"></div>
+</div>
+```
+
+- Make sure the map container has a defined height, for example by setting it in CSS:
+```css
+#map { height: 180px; }
+```
+
+- Initialize map
+```javascript
+const map = L.map('map').setView([51.505, -0.09], 13);
+```
+
+- Adding a tile layer
+```javascript
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+```
+
+### You must be able to see a map on your page
+
+- Step 22: Let try to show full page india map
+
+Increase the size of the map
+```css
+#map { height: 100vh; } /* vh = viewport height */
+```
+
+Change the coordinates as per the india map
+```javascript
+const map = L.map('map').setView([20.9716, 80.5946], 5);
+```
+
+- Step 23: Show weather data at right side of the page on top of map
+```css
+#weather {
+    position: fixed;
+    bottom: 100px;
+    right: 200px;
+    border-radius: 10px;
+    opacity: .7;
+    background-color: BLUE;
+    border: 3px solid GREY;
+}
+```
+
+- Step 24: Wrap this JavaScript code for creating Map in a function called drawMap
+
+```javascript
+function drawMap() {
+    const map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+}
+```
+
+And Call this method Just after getting weather data
+
+```javascript
+if (navigator.geolocation) {
+    navigator.getlocation.getCurrentPosition(async position => {
+        const long = position.coords.longitude;
+        const lat = position.coords.latitude;
+        console.log('Lat : ' + lat + ' Long : ' + long);
+
+        const weatherData = await getWeatherData(lat, long);
+
+        console.log(weatherData);
+
+        drawMap();
+    })
+}
+```
+
+- Step 25: Add marker to the map for current location
+```javascript
+if (navigator.geolocation) {
+    navigator.getlocation.getCurrentPosition(async position => {
+        const long = position.coords.longitude;
+        const lat = position.coords.latitude;
+        ...
+
+        drawMap(lat, long, weatherData.name);
+    })
+}
+
+function drawMap(lat, long, name) {
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    var marker = L.marker([lat, long]).addTo(map);
+        marker.bindPopup(name).openPopup();
+
+}
+```
+
+- Step 26: Add click event handler for map and get the lat long for the clicked place
+
+```javascript
+function drawMap(lat, long) {
+    ...
+
+    var marker = L.marker([lat, long]).addTo(map);
+        marker.bindPopup(data.name).openPopup();
+
+    map.on('click', function (e){
+        console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+
+    });
+
+}
+
+```
+**Try clicking on the map to see the clicked place coordinates**
+
+- Step 27: Now you have the coordinates of the place which you clicked on the map, try to get the weather data for these new coordinates
+
+```javascript
+function drawMap(lat, long, name) {
+    ...
+
+    var marker = L.marker([lat, long]).addTo(map);
+        marker.bindPopup(name).openPopup();
+
+    map.on('click', function (e){
+        console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+
+        const data = await getWeatherdata(e.latlng.lat, e.latlng.lng);
+
+        // Draw the marker for the new place
+        marker.setLatLng([e.latlng.lat, e.latlng.lng]);
+        marker.bindPopup(data.name).openPopup();
+
+    });
+}
+```
+**Congratulations, you have complted the weather-app project**
